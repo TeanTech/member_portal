@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!-- Coding by CodingNepal || www.codingnepalweb.com -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Boxicons CSS -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <title>Foresight</title>
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+  <body>
+    <!-- navbar -->
+    <nav class="navbar">
+      <div class="logo_item">
+        <i class="bx bx-menu" id="sidebarOpen"></i>
+     Foresight Solutions - Member Portal
+      </div>
+
+
+
+      <div class="navbar_content">
+        <i class="bi bi-grid"></i>
+        <i class='bx bx-sun' id="darkLight"></i>
+   
+        <a href="logout.js" style="text-decoration: none;">Logout</a>
+      </div>
+    </nav>
+
+    <!-- sidebar -->
+    <nav class="sidebar">
+      <div class="menu_content">
+        <ul class="menu_items">
+          <div class="menu_title menu_dahsboard"></div>
+          <!-- duplicate or remove this li tag if you want to add or remove navlink with submenu -->
+          <!-- start -->
+          <li class="item">
+            <a href="index.html" class="nav_link">
+              <span class="navlink_icon">
+                <i class="bx bx-home-alt"></i>
+              </span>
+              <span class="navlink">Home</span>
+            </a>
+          </li>
+          <!-- end -->
+
+          <!-- duplicate this li tag if you want to add or remove  navlink with submenu -->
+          <!-- start -->
+          <li class="item">
+            
+            <ul class="menu_items">
+              <!-- existing menu items... -->
+            
+              <!-- new menu items -->
+
+              <li class="item">
+                <a href="active-loans.html" class="nav_link">
+                  <span class="navlink_icon">
+                    <i class="bx bx-credit-card"></i>
+                  </span>
+                  <span class="navlink">Loans</span>
+                </a>
+              </li>
+              <li class="item">
+                <div href="#" class="nav_link submenu_item">
+                  <span class="navlink_icon">
+                    <i class="bx bx-chart"></i>
+                  </span>
+                  <span class="navlink">Investments</span>
+                  <i class="bx bx-chevron-down navlink_arrow"></i>
+                </div>
+    
+                <ul class="menu_items submenu">
+                    <a href="" class="nav_link sublink">Deposits</a>
+                    <a href="" class="nav_link sublink">Sight Deposits</a>
+                    <a href="" class="nav_link sublink">Savings</a>
+                    <a href="" class="nav_link sublink">Shares</a>
+                    <a href="" class="nav_link sublink">Additional Shares</a>
+
+                  </ul>
+    
+                
+              </li>
+
+              <li class="item">
+                <a href="loan_details.html" class="nav_link">
+                  <span class="navlink_icon">
+                    <i class="bx bx-detail"></i>
+                  </span>
+                  <span class="navlink">Loan Details</span>
+                </a>
+              </li>
+            </ul>
+
+
+
+            
+          </li>
+
+          
+          <!-- end -->
+        </ul>
+
+
+       
+
+        <!-- Sidebar Open / Close -->
+        <div class="bottom_content">
+          <div class="bottom expand_sidebar">
+            <span> Expand</span>
+            <i class='bx bx-log-in' ></i>
+          </div>
+          <div class="bottom collapse_sidebar">
+            <span> Collapse</span>
+            <i class='bx bx-log-out'></i>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+
+            <div class="search-box">
+                <i class="uil uil-search"></i>
+                <input type="text" placeholder="Search here...">
+            </div>
+            
+            <img src="images/profile.jpg" alt="">
+        </div>
+
+        <div class="dash-content">
+            <div class="overview">
+                <div class="title">
+                    <i class="uil uil-tachometer-fast-alt"></i>
+                    
+                </div>
+       
+
+        </div>
+        </div>
+    </section>
+    <!-- JavaScript -->
+    <script src="app.js"></script>
+  </body>
+</html>
