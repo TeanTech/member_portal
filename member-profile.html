@@ -32,6 +32,7 @@ table th {
     padding: 10px 0;
     background-color: #f4f4f4;
     border: thin solid #d4d4d4;
+    
 }
 
 table td {
@@ -40,6 +41,7 @@ table td {
     width: 18%;
     text-align: center;
     background-color: #fff;
+    text-align: left;
 }
 
 table img {
@@ -102,14 +104,14 @@ Member Portal
             
             <ul class="menu_items">
 
-              <li class="item">
-                <a href="member-profile.html" class="nav_link">
-                  <span class="navlink_icon">
-                    <i class="bx bx-user"></i>
-                  </span>
-                  <span class="navlink">My Profile</span>
-                </a>
-              </li>
+                <li class="item">
+                    <a href="member-profile.html" class="nav_link">
+                      <span class="navlink_icon">
+                        <i class="bx bx-user"></i>
+                      </span>
+                      <span class="navlink">My Profile</span>
+                    </a>
+                  </li>
 
               <li class="item">
                 <a href="active-loans.html" class="nav_link">
@@ -141,7 +143,7 @@ Member Portal
               </li>
 
               <li class="item">
-                    <a href="loans_details.html" class="nav_link">
+                <a href="loans_details.html" class="nav_link">
                   <span class="navlink_icon">
                     <i class="bx bx-detail"></i>
                   </span>
@@ -191,86 +193,58 @@ Member Portal
             <div class="overview">
                 <div class="title">
                     <i class="uil uil-tachometer-fast-alt"></i>
-                    <span class="text">Active Loans</span>
-                    </div>
 
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>Loan ID</th>
-                        </tr>
-                      </thead>
-                      <tbody id="loansTableBody"></tbody>
+                    <table id="member-profile">
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Surname</td>
+                                <td id="surname"></td>
+                            </tr>
+                            <tr>
+                                <td>Other Name</td>
+                                <td id="otherName"></td>
+                            </tr>
+                            <tr>
+                                <td>Member Number</td>
+                                <td id="memberNo"></td>
+                            </tr>
+                            <tr>
+                                <td>Station ID</td>
+                                <td id="stationId"></td>
+                            </tr>
+                            <tr>
+                                <td>SACCO Name</td>
+                                <td id="saccoName"></td>
+                            </tr>
+                        </tbody>
                     </table>
-                </div>
-
+                    
                     <script type="module">
-                      import { getActiveLoans } from './script.js';
+                      import { getMemberProfile } from './script.js';
                     
-                      async function displayActiveLoans(memberNumber, stationId) {
+                      async function displayMemberProfile(phoneNumber) {
                           try {
-                              const loans = await getActiveLoans(memberNumber, stationId);
+                              const profile = await getMemberProfile(phoneNumber);
                     
-                              const loansTable = document.getElementById('loansTable');
-                              const loansTableBody = document.getElementById('loansTableBody');
-                              loansTableBody.innerHTML = ''; 
-                    
-                              if (loans.length === 0) {
-                                  const noDataRow = document.createElement('tr');
-                                  const noDataCell = document.createElement('td');
-                                  noDataCell.colSpan = 2;
-                                  noDataCell.textContent = 'No active loans found.';
-                                  noDataRow.appendChild(noDataCell);
-                                  loansTableBody.appendChild(noDataRow);
-                              } else {
-                                  loans.forEach((loan, index) => {
-                                      const row = document.createElement('tr');
-                    
-                                      const indexCell = document.createElement('td');
-                                      indexCell.textContent = index + 1;
-                    
-                                      const loanIdCell = document.createElement('td');
-                                      loanIdCell.textContent = loan;  
-                    
-                                      row.appendChild(indexCell);
-                                      row.appendChild(loanIdCell);
-                                      loansTableBody.appendChild(row);
-                                  });
-                              }
-                    
-                              loansTable.style.display = 'table'; 
+                              document.getElementById('surname').textContent = profile.surname || 'N/A';
+                              document.getElementById('otherName').textContent = profile.otherName || 'N/A';
+                              document.getElementById('memberNo').textContent = profile.memberNo || 'N/A';
+                              document.getElementById('stationId').textContent = profile.stationId || 'N/A';
+                              document.getElementById('saccoName').textContent = profile.saccoName || 'N/A';
                           } catch (error) {
-                              console.error('Failed to fetch active loans:', error);
+                              console.error('Failed to fetch member profile:', error);
                           }
                       }
                     
-                      //memberNumber and stationId to retrieve the active loans
-                      displayActiveLoans('1145', 'KLR742');  
+                      // Replace with a valid phone number to retrieve the member profile
+                      displayMemberProfile('+255657822049');
                     </script>
-                    
-             
-
-                    
-                  
-
-                  <!-- <script type="module">
-                    import { getActiveLoans } from './script.js';
-                  
-                    async function displayMemberProfile(phoneNumber) {
-                        try {
-                            const profile = await getMemberProfile(phoneNumber);
-                  
-                            document.getElementById('surname').textContent = profile.surname || 'N/A';
-                            
-                        } catch (error) {
-                            console.error('Failed to fetch member profile:', error);
-                        }
-                    }
-                  
-                    // Replace with a valid phone number to retrieve the member profile
-                    displayMemberProfile('+255657822049');
-                  </script> -->
 
        
         </div>

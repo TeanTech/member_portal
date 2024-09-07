@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-->
+
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -8,8 +8,64 @@
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <title>Foresight</title>
     <link rel="stylesheet" href="styles/style.css" />
+
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+  
+body {
+    font-family: sans-serif;
+    min-height: 100vh;
+    color: #555;
+}
+
+table {
+    width: 100%;
+    margin: 30px auto;
+    max-width: 1000px;
+}
+
+table th {
+    padding: 10px 0;
+    background-color: #f4f4f4;
+    border: thin solid #d4d4d4;
+}
+
+table td {
+    padding: 10px;
+    border: thin solid #d4d4d4;
+    width: 18%;
+    text-align: center;
+    background-color: #fff;
+}
+
+table img {
+    width: 70%;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    table {
+        margin:10px auto;
+
+    }
+  
+    table td {
+        width: auto;
+    }
+  
+    table img {
+        width: 50%;
+    }
+}
+
+  </style>
   </head>
   <body>
+
 
     <nav class="navbar">
       <div class="logo_item">
@@ -27,7 +83,7 @@ Member Portal
       </div>
     </nav>
 
- 
+
     <nav class="sidebar">
       <div class="menu_content">
         <ul class="menu_items">
@@ -45,14 +101,15 @@ Member Portal
           <li class="item">
             
             <ul class="menu_items">
-              <li class="item">
-                <a href="member-profile.html" class="nav_link">
-                  <span class="navlink_icon">
-                    <i class="bx bx-user"></i>
-                  </span>
-                  <span class="navlink">My Profile</span>
-                </a>
-              </li>
+
+                <li class="item">
+                    <a href="member-profile.html" class="nav_link">
+                      <span class="navlink_icon">
+                        <i class="bx bx-user"></i>
+                      </span>
+                      <span class="navlink">My Profile</span>
+                    </a>
+                  </li>
 
               <li class="item">
                 <a href="active-loans.html" class="nav_link">
@@ -98,11 +155,12 @@ Member Portal
             
           </li>
 
+          
+
         </ul>
 
 
-       
-
+      
 
         <div class="bottom_content">
           <div class="bottom expand_sidebar">
@@ -133,14 +191,81 @@ Member Portal
             <div class="overview">
                 <div class="title">
                     <i class="uil uil-tachometer-fast-alt"></i>
-                    
+                    <span class="text">Sight Deposits</span>
                 </div>
-       
 
+
+                
+<table>
+    <thead>
+      <tr>
+        <th>Receipt Date</th>
+        <th>Debit</th>
+        <th>Credit</th>
+        <th>Running Balance</th>
+      </tr>
+    </thead>
+    <tbody id="investmentsTableBody">
+      
+    </tbody>
+  </table>
+  
+  <script type="module">
+    import { getInvestments } from './script.js';
+  
+    async function displayInvestments(memberNumber, stationId, investmentCode) {
+      try {
+        const investments = await getInvestments(memberNumber, stationId, investmentCode);
+  
+
+        if (!Array.isArray(investments)) {
+          console.error('Investments data is not an array:', investments);
+          return;
+        }
+  
+        const tableBody = document.getElementById('investmentsTableBody');
+  
+        investments.forEach(investment => {
+          const row = document.createElement('tr');
+  
+          const receiptDateCell = document.createElement('td');
+          receiptDateCell.textContent = investment.receiptDate || 'N/A';
+          row.appendChild(receiptDateCell);
+  
+          const debitCell = document.createElement('td');
+          debitCell.textContent = investment.debit || 'N/A';
+          row.appendChild(debitCell);
+  
+          const creditCell = document.createElement('td');
+          creditCell.textContent = investment.credit || 'N/A';
+          row.appendChild(creditCell);
+  
+          const runningBalanceCell = document.createElement('td');
+          runningBalanceCell.textContent = investment.runningBalance || 'N/A';
+          row.appendChild(runningBalanceCell);
+  
+          tableBody.appendChild(row);
+        });
+      } catch (error) {
+        console.error('Failed to fetch investments:', error);
+      }
+    }
+  
+    //valid values to retrieve the investments
+    const memberNumber = '1145';  
+    const stationId = 'KLR742';     
+    const investmentCode = '92';      
+  
+    displayInvestments(memberNumber, stationId, investmentCode);
+  </script>
+  
+                  
+
+       
         </div>
         </div>
     </section>
-    <!-- JavaScript -->
+
     <script src="app.js"></script>
   </body>
 </html>
