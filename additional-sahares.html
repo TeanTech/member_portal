@@ -139,15 +139,15 @@ Member Portal
     
                 
               </li>
-
               <li class="item">
-                <a href="loans_details.html" class="nav_link">
-                  <span class="navlink_icon">
-                    <i class="bx bx-detail"></i>
-                  </span>
-                  <span class="navlink">Loan Details</span>
-                </a>
-              </li>
+                <a href="logout.js" class="nav_link">
+        <span class="navlink_icon">
+          <i class='bx bx-log-out-circle' style="color: blue;" ></i>
+        </span>
+        <span class="navlink" style="color:blue;">Logout</span>
+      </a>
+    </li>
+
             </ul>
 
 
@@ -196,7 +196,7 @@ Member Portal
 
 
                 
-<table>
+                <table style="margin-left: 6px;">
     <thead>
       <tr>
         <th>Receipt Date</th>
@@ -225,35 +225,41 @@ Member Portal
   
         const tableBody = document.getElementById('investmentsTableBody');
   
-        investments.forEach(investment => {
-          const row = document.createElement('tr');
-  
-          const receiptDateCell = document.createElement('td');
-          receiptDateCell.textContent = investment.receiptDate || 'N/A';
-          row.appendChild(receiptDateCell);
-  
-          const debitCell = document.createElement('td');
-          debitCell.textContent = investment.debit || 'N/A';
-          row.appendChild(debitCell);
-  
-          const creditCell = document.createElement('td');
-          creditCell.textContent = investment.credit || 'N/A';
-          row.appendChild(creditCell);
-  
-          const runningBalanceCell = document.createElement('td');
-          runningBalanceCell.textContent = investment.runningBalance || 'N/A';
-          row.appendChild(runningBalanceCell);
-  
-          tableBody.appendChild(row);
-        });
+        const numberFormat = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+
+investments.forEach(investment => {
+    const row = document.createElement('tr');
+
+    const receiptDateCell = document.createElement('td');
+    receiptDateCell.textContent = investment.receiptDate || 'N/A';
+    row.appendChild(receiptDateCell);
+
+    const debitCell = document.createElement('td');
+
+    debitCell.textContent = typeof investment.debit === 'number' ? numberFormat.format(investment.debit) : 'N/A';
+    row.appendChild(debitCell);
+
+    const creditCell = document.createElement('td');
+
+    creditCell.textContent = typeof investment.credit === 'number' ? numberFormat.format(investment.credit) : 'N/A';
+    row.appendChild(creditCell);
+
+    const runningBalanceCell = document.createElement('td');
+
+    runningBalanceCell.textContent = typeof investment.runningBalance === 'number' ? numberFormat.format(investment.runningBalance) : 'N/A';
+    row.appendChild(runningBalanceCell);
+
+    tableBody.appendChild(row);
+});
       } catch (error) {
         console.error('Failed to fetch investments:', error);
       }
     }
   
     //valid values to retrieve the investments
-    const memberNumber = '1145';  
-    const stationId = 'KLR742';     
+    const memberNumber = '2387';  
+    const stationId = 'CR1697';     
     const investmentCode = '95';      
   
     displayInvestments(memberNumber, stationId, investmentCode);

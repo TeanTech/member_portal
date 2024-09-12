@@ -84,7 +84,7 @@ body.dark {
 /* sidebar */
 .sidebar {
   background-color: var(--white-color);
-  width: 260px;
+  width: 210px;
   position: fixed;
   top: 0;
   left: 0;
@@ -103,7 +103,7 @@ body.dark {
   display: none;
 }
 .menu_content {
-  position: relative;
+margin-left: -10px;
 }
 .menu_title {
   margin: 15px 0;
@@ -205,7 +205,7 @@ body.dark {
   position: fixed;
   bottom: 60px;
   left: 0;
-  width: 260px;
+  width: 210px;
   cursor: pointer;
   transition: all 0.5s ease;
 }
@@ -262,7 +262,7 @@ body.dark {
 
 .dashboard{
   position: relative;
-  left: 250px;
+  left: 240px;
   background-color: var(--panel-color);
   min-height: 100vh;
   width: calc(100% - 250px);
@@ -276,7 +276,7 @@ nav.close ~ .dashboard{
 .dashboard .top{
   position: fixed;
   top: 0;
-  left: 250px;
+  left: 230px;
   display: flex;
   width: calc(100% - 250px);
   justify-content: space-between;
@@ -329,7 +329,7 @@ nav.close ~ .dashboard .top{
   border-radius: 50%;
 }
 .dashboard .dash-content{
-  padding-top: 50px;
+  padding-top: 30px;
 }
 .dash-content .title{
   display: flex;
@@ -339,7 +339,7 @@ nav.close ~ .dashboard .top{
 .dash-content .title i{
   position: relative;
   height: 35px;
-  width: 35px;
+  width: 0px;
   background-color: var(--primary-color);
   border-radius: 6px;
   color: var(--title-icon-color);
@@ -352,7 +352,7 @@ nav.close ~ .dashboard .top{
   font-size: 20px;
   font-weight: 500;
   color: var(--text-color);
-  margin-left: 10px;
+  margin-left: 0px;
 }
 .dash-content .boxes{
   display: flex;
@@ -369,4 +369,8 @@ nav.close ~ .dashboard .top{
   padding: 15px 20px;
   background-color: var(--box1-color);
   transition: var(--tran-05);
+}
+
+table {
+  margin-left: 0px;
 }

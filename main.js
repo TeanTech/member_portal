@@ -4,7 +4,7 @@ import getActiveLoans from '../api/getActiveLoans.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const memberNumber = '1145';
-  const stationId = 'KLR742'; 
+  const stationId = 'CR1697'; 
 
   getActiveLoans(memberNumber, stationId)
     .then(activeLoans => {

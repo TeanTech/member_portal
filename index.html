@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>Foresight</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+    
+    
+    <title>Foresight - Member Portal</title>
     <link rel="stylesheet" href="styles/style.css" />
   </head>
   <body>
@@ -84,13 +88,13 @@ Member Portal
               </li>
 
               <li class="item">
-                <a href="loans_details.html" class="nav_link">
-                  <span class="navlink_icon">
-                    <i class="bx bx-detail"></i>
-                  </span>
-                  <span class="navlink">Loan Details</span>
-                </a>
-              </li>
+                <a href="logout.js" class="nav_link">
+        <span class="navlink_icon">
+          <i class='bx bx-log-out-circle' style="color: blue;" ></i>
+        </span>
+        <span class="navlink" style="color:blue;">Logout</span>
+      </a>
+    </li>
             </ul>
 
 
@@ -126,16 +130,128 @@ Member Portal
                 <input type="text" placeholder="Search here...">
             </div>
             
-            <img src="images/profile.jpg" alt="">
+
         </div>
 
         <div class="dash-content">
             <div class="overview">
-                  <div class="card mb-4">
+
+                  <div class="card mb-4 mt-5">
                     <div class="card-body">
-                      <h5 class="card-title">Welcome to Foresight Solutions  - Member Portal</h5>
+                      <h5 class="card-title" style="margin-top: 12px;">Welcome to Member Portal</h5>
                     </div>
                   </div>
+       
+
+<canvas id="investmentChart" width="300" height="120"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<script>
+  Chart.register(ChartDataLabels);
+</script>
+
+<script type="module">
+  import { getInvestments } from './script.js';
+
+  // Function to fetch investments for multiple codes
+  async function fetchInvestmentData(memberNumber, stationId) {
+    try {
+      const investmentCodes = {
+        'Deposit': '96',
+        'Savings': '98',
+        'Shares': '97',
+        'Additional Shares': '95',
+        'Sight Deposits': '92'
+      };
+
+      const runningBalances = [];
+      const labels = Object.keys(investmentCodes);
+
+      for (const label of labels) {
+        const code = investmentCodes[label];
+        const investments = await getInvestments(memberNumber, stationId, code);
+
+        if (!Array.isArray(investments)) {
+          console.error(`Investments data for code ${code} is not an array:`, investments);
+          runningBalances.push(0); // Default to 0 if the data is invalid
+          continue;
+        }
+
+        // Get the running balance of the latest investment entry
+        const latestBalance = investments.length > 0 ? investments[investments.length - 1].runningBalance : 0;
+        runningBalances.push(latestBalance);
+      }
+
+      // Call function to display bar chart
+      displayInvestmentChart(labels, runningBalances);
+
+    } catch (error) {
+      console.error('Failed to fetch investments:', error);
+    }
+  }
+
+  // Function to display bar chart using Chart.js
+  function displayInvestmentChart(labels, runningBalances) {
+    const ctx = document.getElementById('investmentChart').getContext('2d');
+
+    // Register the ChartDataLabels plugin
+    Chart.register(ChartDataLabels);
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Running Balance',
+          data: runningBalances,
+          backgroundColor: [
+            'rgba(54, 162, 235, 0.6)',  // Blue for Deposit
+            'rgba(75, 192, 192, 0.6)',  // Teal for Savings
+            'rgba(153, 102, 255, 0.6)', // Purple for Shares
+            'rgba(255, 159, 64, 0.6)',  // Orange for Additional Shares
+            'rgba(255, 206, 86, 0.6)'   // Yellow for Sight Deposits
+          ],
+          borderColor: [
+            'rgba(54, 162, 235, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(255, 206, 86, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          datalabels: {
+            anchor: 'end',
+            align: 'top',
+            formatter: function(value) {
+              return value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // Trigger fetch and display
+  const memberNumber = '2387';
+  const stationId = 'CR1697';
+  fetchInvestmentData(memberNumber, stationId);
+</script>
+
+
+
        
 
         </div>

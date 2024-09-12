@@ -23,7 +23,7 @@ body {
 }
 
 table {
-    width: 100%;
+    width: 200%;
     margin: 40px auto;
     max-width: 1000px;
 }
@@ -140,15 +140,15 @@ Member Portal
     
                 
               </li>
-
               <li class="item">
-                <a href="loans_details.html" class="nav_link">
-                  <span class="navlink_icon">
-                    <i class="bx bx-detail"></i>
-                  </span>
-                  <span class="navlink">Loan Details</span>
-                </a>
-              </li>
+                <a href="logout.js" class="nav_link">
+        <span class="navlink_icon">
+          <i class='bx bx-log-out-circle' style="color: blue;" ></i>
+        </span>
+        <span class="navlink" style="color:blue;">Logout</span>
+      </a>
+    </li>
+
             </ul>
 
 
@@ -199,20 +199,11 @@ Member Portal
                         <table>
                           <thead>
                             <tr>
-                              <th>Loan ID</th>
+                              
                               <th>Receipt Date</th>
-                              <th>Transaction Indicator</th>
                               <th>Disbursed Amount</th>
-                              <th>Requested Amount</th>
-                              <th>Paid Amount</th>
                               <th>Principal Paid</th>
-                              <th>Interest Paid</th>
-                              <th>Principal Amount</th>
-                              <th>Cumulative Principal Paid</th>
-                              <th>Cumulative Interest Paid</th>
                               <th>Outstanding Principal</th>
-                              <th>Outstanding Interest</th>
-                              <th>Interest Amount</th>
                             </tr>
                           </thead>
                           <tbody id="loan_detailsTableBody">
@@ -223,85 +214,70 @@ Member Portal
                     
                       <script type="module">
                         import { getLoanDetails } from './script.js'; 
-                    
+                        
+                        // Function to get loanId from URL
+                        function getLoanIdFromUrl() {
+                          const params = new URLSearchParams(window.location.search);
+                          return params.get('loanId');
+                        }
+                      
                         async function displayLoanDetails(memberNumber, stationId, loanId) {
                           try {
-                            
                             const loanDetails = await getLoanDetails(memberNumber, stationId, loanId);
-                    
-                            
+                        
                             const tableBody = document.getElementById('loan_detailsTableBody');
-                    
-                            
-                            loanDetails.forEach(loan => {
-                              const row = document.createElement('tr');
-                    
-                              const loanIdCell = document.createElement('td');
-                              loanIdCell.textContent = loan.loanId || 'N/A';
-                              row.appendChild(loanIdCell);
-                    
-                              const receiptDateCell = document.createElement('td');
-                              receiptDateCell.textContent = loan.receiptDate || 'N/A';
-                              row.appendChild(receiptDateCell);
-                    
-                              const transIndicatorCell = document.createElement('td');
-                              transIndicatorCell.textContent = loan.transIndicator || 'N/A';
-                              row.appendChild(transIndicatorCell);
-                    
-                              const disbursedAmountCell = document.createElement('td');
-                              disbursedAmountCell.textContent = loan.disbursedAmount || 'N/A';
-                              row.appendChild(disbursedAmountCell);
-                    
-                              const requestedAmountCell = document.createElement('td');
-                              requestedAmountCell.textContent = loan.requestedAmount || 'N/A';
-                              row.appendChild(requestedAmountCell);
-                    
-                              const paidAmountCell = document.createElement('td');
-                              paidAmountCell.textContent = loan.paidAmount || 'N/A';
-                              row.appendChild(paidAmountCell);
-                    
-                              const principalPaidCell = document.createElement('td');
-                              principalPaidCell.textContent = loan.principalPaid || 'N/A';
-                              row.appendChild(principalPaidCell);
-                    
-                              const interestPaidCell = document.createElement('td');
-                              interestPaidCell.textContent = loan.interestPaid || 'N/A';
-                              row.appendChild(interestPaidCell);
-                    
-                              const principalAmountCell = document.createElement('td');
-                              principalAmountCell.textContent = loan.principalAmount || 'N/A';
-                              row.appendChild(principalAmountCell);
-                    
-                              const cumulativePrincipalPaidCell = document.createElement('td');
-                              cumulativePrincipalPaidCell.textContent = loan.cumulativePrincipalPaid || 'N/A';
-                              row.appendChild(cumulativePrincipalPaidCell);
-                    
-                              const cumulativeInterestPaidCell = document.createElement('td');
-                              cumulativeInterestPaidCell.textContent = loan.cumulativeInterestPaid || 'N/A';
-                              row.appendChild(cumulativeInterestPaidCell);
-                    
-                              const outstandingPrincipalCell = document.createElement('td');
-                              outstandingPrincipalCell.textContent = loan.outstandingPrincipal || 'N/A';
-                              row.appendChild(outstandingPrincipalCell);
-                    
-                              const outstandingInterestCell = document.createElement('td');
-                              outstandingInterestCell.textContent = loan.outstandingInterest || 'N/A';
-                              row.appendChild(outstandingInterestCell);
-                    
-                              const interestAmountCell = document.createElement('td');
-                              interestAmountCell.textContent = loan.interestAmount || 'N/A';
-                              row.appendChild(interestAmountCell);
-                    
-                              tableBody.appendChild(row);
-                            });
+                            tableBody.innerHTML = '';  // Clear previous table rows if any
+                        
+                            // Create an instance of Intl.NumberFormat for plain numbers with two decimal places
+const numberFormat = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+loanDetails.forEach(loan => {
+    const row = document.createElement('tr');
+
+    
+
+    const receiptDateCell = document.createElement('td');
+    receiptDateCell.textContent = loan.receiptDate || 'N/A';
+    row.appendChild(receiptDateCell);
+
+    
+
+    const disbursedAmountCell = document.createElement('td');
+    disbursedAmountCell.textContent = typeof loan.disbursedAmount === 'number' ? numberFormat.format(loan.disbursedAmount) : 'N/A';
+    row.appendChild(disbursedAmountCell);
+
+
+    const principalPaidCell = document.createElement('td');
+    principalPaidCell.textContent = typeof loan.principalPaid === 'number' ? numberFormat.format(loan.principalPaid) : 'N/A';
+    row.appendChild(principalPaidCell);
+
+    
+
+    const outstandingPrincipalCell = document.createElement('td');
+    outstandingPrincipalCell.textContent = typeof loan.outstandingPrincipal === 'number' ? numberFormat.format(loan.outstandingPrincipal) : 'N/A';
+    row.appendChild(outstandingPrincipalCell);
+
+
+
+    tableBody.appendChild(row);
+});
+
                           } catch (error) {
                             console.error('Failed to fetch loan details:', error);
                           }
                         }
-                    
-                        // actual memberNumber, stationId, and loanId
-                        displayLoanDetails('1145', 'KLR742', '23523');
+                      
+                        // Get loanId from URL
+                        const loanId = getLoanIdFromUrl();
+                      
+                        // Call displayLoanDetails with actual memberNumber, stationId, and loanId from URL
+                        if (loanId) {
+                          displayLoanDetails('2387', 'CR1697', loanId);  // Replace with actual memberNumber and stationId as needed
+                        } else {
+                          console.error('No loan ID found in the URL');
+                        }
                       </script>
+                      
                       </div>
                       
 
